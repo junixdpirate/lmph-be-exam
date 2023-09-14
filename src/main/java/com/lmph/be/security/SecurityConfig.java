@@ -1,5 +1,6 @@
 package com.lmph.be.security;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,7 +18,11 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.formLogin();
-		http.authorizeHttpRequests().anyRequest().authenticated();
+		http.authorizeHttpRequests(
+				authz -> authz.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+				.requestMatchers("/").permitAll().anyRequest()
+				.authenticated())
+		.cors((cors) -> cors.disable()).csrf((csrf) -> csrf.disable());
 		return http.build();
 	}
 	

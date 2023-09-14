@@ -20,4 +20,25 @@ public class IndexController {
 		
 		return "home";
 	}
+	
+	@GetMapping("/employees")
+	public String index() {
+		
+	
+		return "employees";
+	}
+	
+	@GetMapping("/employees/add")
+	public String form() {
+		
+	
+		return "employee_form";
+	}
+	
+	@GetMapping("/employees/{id}")
+	public String form(Long id) {
+		
+	
+		return "employee_form";
+	}
 }

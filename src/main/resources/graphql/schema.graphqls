@@ -1,0 +1,26 @@
+type Query {
+	employees: [Employee]
+    employeeById(id: ID): Employee
+}
+
+type Employee {
+    id: ID
+    firstName: String
+    lastName: String
+	email: String
+	contacts: [Contact]
+	addresses: [Address]
+}
+
+type Contact {
+	id: ID
+	contactNo: String
+	isPrimary: Boolean
+}
+
+type Address {
+	id: ID
+	address1: String
+	address2: String
+	isPrimary: Boolean
+}
