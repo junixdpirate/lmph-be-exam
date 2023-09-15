@@ -1,7 +1,6 @@
 package com.lmph.be.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.NoSuchElementException;
 
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.lmph.be.entity.Employee;
-import com.lmph.be.service.EmployeeService;
 
 /**
  * User DAO Unit Test
@@ -31,7 +29,7 @@ class EmployeeDaoTest {
 		user.setFirstName("Jhun");
 		user.setMiddleName("A");
 		user.setLastName("Tiballa");
-		user.setEmail("jhun.tiballa@legalmatch.com");
+		
 		
 	
 		user = this.employeeDao.save(user);
@@ -48,7 +46,7 @@ class EmployeeDaoTest {
 		Employee user = this.employeeDao.findById(3L).get();
 		
 		assertThat(user).isNotNull();
-		assertThat(user.getEmail()).isEqualTo("jhun.tiballa@legalmatch.com");
+		
 	}
 	
 	@Test

@@ -3,6 +3,7 @@ package com.lmph.be.security;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,16 +14,28 @@ import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
+	private final String LOGIN_URL = "/login";
+	private final String HOME_URL = "/home";
+	private final String LOGOUT_URL = "/logout";
+	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.formLogin();
+		//http.formLogin();
+		
+		http.formLogin(login -> login
+								.loginProcessingUrl(LOGIN_URL).loginPage(LOGIN_URL).defaultSuccessUrl(HOME_URL, true)
+								.failureUrl(LOGIN_URL + "?error=true").permitAll())
+			.logout(logout -> logout.logoutSuccessUrl(LOGIN_URL).logoutUrl(LOGOUT_URL));
+		
 		http.authorizeHttpRequests(
 				authz -> authz.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.requestMatchers("/").permitAll().anyRequest()
 				.authenticated())
 		.cors((cors) -> cors.disable()).csrf((csrf) -> csrf.disable());
+		
 		return http.build();
 	}
 	

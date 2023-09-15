@@ -1,29 +1,33 @@
 package com.lmph.be.dto;
 
-import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 
 import com.lmph.be.entity.Employee;
-import com.lmph.be.enums.Gender;
-import com.lmph.be.enums.MaritalStatus;
-
-import lombok.Data;
 
 /**
- * User Detail DTO
+ * Employee Info DTO
  * @author Jhun Tiballa
  */
-@Data
-public class EmployeeInfo extends Employee implements Serializable {
-
-	private static final long serialVersionUID = -2252548455196595678L;
-
-	/**
-	 * Genders
-	 */
-	private Gender genders;
+public class EmployeeInfo extends Employee  {
 	
-	/**
-	 * Marital Statues
-	 */
-	private MaritalStatus maritalStatuses;
+	public Integer getAge() {
+		
+		if(  this.getBirthdate() != null ) {
+			Period period = Period.between(LocalDate.now(), this.getBirthdate());
+			return Math.abs(period.getYears());
+		}
+		
+		return 0;
+	}
+	
+	public Integer getYearsOfExperience() {
+		if(  this.getDateHired() != null ) {
+			Period period = Period.between(LocalDate.now(), this.getDateHired());
+			return Math.abs(period.getYears());
+		}
+		
+		return 0;
+	}
+
 }

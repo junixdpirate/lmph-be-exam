@@ -2,14 +2,21 @@ package com.lmph.be.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lmph.be.dao.EmployeeDao;
+import com.lmph.be.dto.EmployeeInfo;
 import com.lmph.be.entity.Address;
 import com.lmph.be.entity.Contact;
 import com.lmph.be.entity.Employee;
+import com.lmph.be.form.AddressInput;
+import com.lmph.be.form.ContactInput;
+import com.lmph.be.form.EmployeeForm;
 
 /**
  * User Service class
@@ -22,35 +29,68 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeDao employeeDao;
 	
-	public Employee insert(Employee employee, List<Address> addresses, List<Contact> contacts) {
-				
-		employee.getAddresses().addAll(addresses);
-		employee.getContacts().addAll(contacts);
+	public EmployeeInfo upsert(EmployeeForm form) {
 		
-		return this.employeeDao.save(employee);
-
+		EmployeeInfo employeeInfo = new EmployeeInfo();
+		Employee employee = new Employee();
+		
+		BeanUtils.copyProperties(form, employee);
+		
+		employee.getAddresses().clear();
+		employee.getContacts().clear();
+		
+		if( Objects.nonNull(form.getAddresses()) ) {
+			for( AddressInput addressInput : form.getAddresses()) {
+				Address address = new Address();
+				BeanUtils.copyProperties(addressInput, address);
+				address.setEmployee(employee);
+				employee.getAddresses().add(address);
+			}
+		}
+		
+		if( Objects.nonNull(form.getContacts()) ) {
+			for( ContactInput contactInput : form.getContacts()) {
+				Contact contact = new Contact();
+				BeanUtils.copyProperties(contactInput, contact);
+				contact.setEmployee(employee);
+				employee.getContacts().add(contact);
+			}
+		}
+		
+		employee = this.employeeDao.save(employee);
+		
+		BeanUtils.copyProperties(employee, employeeInfo);
+		
+		return employeeInfo;
 	}
-	
-	public Employee update(Employee employee) {
-				
-		return this.employeeDao.save(employee);
-	}
-	
+		
 	public void delete(Long id) {
 		
 		this.employeeDao.deleteById(id);
 	}
 	
-	public Employee getEmployee(Long userId) {		
+	public EmployeeInfo getEmployee(Long userId) {		
 		try {
-			return this.employeeDao.findById(userId).get();
+			Employee employee = this.employeeDao.findById(userId).get();			
+			EmployeeInfo employeeInfo = new EmployeeInfo();
+			
+			BeanUtils.copyProperties(employee, employeeInfo);
+			
+			return employeeInfo;			
 		}
 		catch(NoSuchElementException e) {
 			return null;
 		}
 	}
 		
-	public List<Employee> getEmployees() {		
-		return (List<Employee>) this.employeeDao.findAll();		
+	public List<EmployeeInfo> getEmployees() {		
+		List<Employee> employeeList = this.employeeDao.findAll();
+		
+		return employeeList.stream().map( employee -> {
+			EmployeeInfo employeeInfo = new EmployeeInfo();
+			BeanUtils.copyProperties(employee, employeeInfo);
+			return employeeInfo;
+		})
+		.collect(Collectors.toList());
 	}
 }

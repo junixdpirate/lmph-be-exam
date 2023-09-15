@@ -1,14 +1,9 @@
 package com.lmph.be.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-
-
-import com.lmph.be.enums.Gender;
-import com.lmph.be.enums.MaritalStatus;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -32,24 +27,22 @@ public class Employee {
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-			
+		
 	private String firstName;
 	
 	private String lastName;
 	
 	private String middleName;
+		
+	private LocalDate birthdate;
 	
-	private String email;
+	private String gender;
 	
-	private Date birthdate;
-	
-	private Gender gender;
-	
-	private MaritalStatus maritalStatus;
+	private String maritalStatus;
 	
 	private String companyPosition;
 	
-	private Date dateHired;
+	private LocalDate dateHired;
 	
 	@OneToMany(mappedBy="employee", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Contact> contacts = new ArrayList<>();

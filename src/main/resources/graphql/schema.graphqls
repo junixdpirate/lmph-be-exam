@@ -7,7 +7,14 @@ type Employee {
     id: ID
     firstName: String
     lastName: String
-	email: String
+    middleName: String
+    birthdate: String
+    gender: String
+    maritalStatus: String
+    companyPosition: String
+    dateHired: String
+	age: Int
+	yearsOfExperience: Int
 	contacts: [Contact]
 	addresses: [Address]
 }

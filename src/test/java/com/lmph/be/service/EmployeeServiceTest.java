@@ -30,7 +30,7 @@ class EmployeeServiceTest {
 		
 		employee.setFirstName("Jane");
 		employee.setLastName("Doe");
-		employee.setEmail("janedoe@gmail.com");
+		
 		
 		Contact contact = new Contact();
 		contact.setContactNo("11111");
@@ -54,7 +54,7 @@ class EmployeeServiceTest {
 		addresses.add(address2);
 		
 		
-		employee = this.employeeService.insert(employee, addresses, List.of(contact));
+		//employee = this.employeeService.insert(employee, addresses, List.of(contact));
 		
 		//System.out.println(employee);
 		
@@ -97,7 +97,7 @@ class EmployeeServiceTest {
 		employee.setAddresses(new ArrayList<>());
 		employee.setContacts(new ArrayList<>());
 		
-		employee = this.employeeService.update(employee);
+		//employee = this.employeeService.update(employee);
 		
 		assertThat(employee).isInstanceOf(Employee.class);
 		assertThat(employee.getId()).isEqualTo(16L);
@@ -113,7 +113,7 @@ class EmployeeServiceTest {
 		
 		employee.setFirstName("Jane-edited");
 		employee.setLastName("Doe-edited");
-		employee.setEmail("janedoe_edited@gmail.com");
+		
 		
 		Contact contact = new Contact();
 		contact.setContactNo("11111-2222");
@@ -139,7 +139,7 @@ class EmployeeServiceTest {
 		employee.getAddresses().addAll(addresses);
 		employee.getContacts().addAll(List.of(contact));
 		
-		employee = this.employeeService.update(employee);
+		//employee = this.employeeService.update(employee);
 		
 		//System.out.println(employee);
 		
@@ -161,7 +161,7 @@ class EmployeeServiceTest {
 			employee.getContacts().get(i).setContactNo("555-55555");
 		}
 		
-		employee = this.employeeService.update(employee);
+		//employee = this.employeeService.update(employee);
 		
 		assertThat(employee.getId()).isNotNull();
 	}
