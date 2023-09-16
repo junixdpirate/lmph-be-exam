@@ -29,6 +29,32 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeDao employeeDao;
 	
+	public EmployeeInfo getEmployee(Long id) {		
+		try {
+			Employee employee = this.employeeDao.findById(id).get();			
+			EmployeeInfo employeeInfo = new EmployeeInfo();
+			
+			BeanUtils.copyProperties(employee, employeeInfo);
+			
+			return employeeInfo;			
+		}
+		catch(NoSuchElementException e) {
+			return null;
+		}
+	}
+		
+	public List<EmployeeInfo> getEmployees() {		
+		List<Employee> employeeList = this.employeeDao.findAll();
+					
+		return employeeList.stream().map( employee -> {
+			EmployeeInfo employeeInfo = new EmployeeInfo();
+			BeanUtils.copyProperties(employee, employeeInfo);
+			return employeeInfo;
+		})
+		.collect(Collectors.toList());
+		
+	}
+	
 	public EmployeeInfo upsert(EmployeeForm form) {
 		
 		EmployeeInfo employeeInfo = new EmployeeInfo();
@@ -65,32 +91,6 @@ public class EmployeeService {
 	}
 		
 	public void delete(Long id) {
-		
 		this.employeeDao.deleteById(id);
-	}
-	
-	public EmployeeInfo getEmployee(Long userId) {		
-		try {
-			Employee employee = this.employeeDao.findById(userId).get();			
-			EmployeeInfo employeeInfo = new EmployeeInfo();
-			
-			BeanUtils.copyProperties(employee, employeeInfo);
-			
-			return employeeInfo;			
-		}
-		catch(NoSuchElementException e) {
-			return null;
-		}
-	}
-		
-	public List<EmployeeInfo> getEmployees() {		
-		List<Employee> employeeList = this.employeeDao.findAll();
-		
-		return employeeList.stream().map( employee -> {
-			EmployeeInfo employeeInfo = new EmployeeInfo();
-			BeanUtils.copyProperties(employee, employeeInfo);
-			return employeeInfo;
-		})
-		.collect(Collectors.toList());
 	}
 }

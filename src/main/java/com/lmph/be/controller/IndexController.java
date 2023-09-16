@@ -9,11 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.lmph.be.enums.Gender;
-import com.lmph.be.enums.MaritalStatus;
 import com.lmph.be.form.EmployeeForm;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Index Controller class

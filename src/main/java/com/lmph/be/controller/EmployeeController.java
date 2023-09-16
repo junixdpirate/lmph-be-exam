@@ -45,7 +45,7 @@ public class EmployeeController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String upsert(@Valid @ModelAttribute("form") EmployeeForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 						
-		if (bindingResult.hasErrors()) {			
+		if (bindingResult.hasErrors()) {	
 			return "employee_form";			
 		}
 		else {						
