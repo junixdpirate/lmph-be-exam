@@ -277,7 +277,10 @@
 				});
 			}
 		
-			const popoluteEmpty = () => `<tr><td colspan="6" class="text-center">No record found</td></tr>`
+			const populateEmpty = () => {
+				const table = $("#dataTable");
+				table.find("tbody").html(`<tr><td colspan="6" class="text-center">No record found</td></tr>`);	 
+			}
 				
 			const hasRole = (role) => roles.find( r => r == role)
 		
