@@ -9,21 +9,17 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.graphql.test.tester.GraphQlTester;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import com.lmph.be.dto.EmployeeInfo;
 import com.lmph.be.form.EmployeeForm;
 import com.lmph.be.service.EmployeeService;
 
@@ -42,36 +38,6 @@ class EmployeeControllerTest {
 	@MockBean
 	private EmployeeService employeeService;
 	
-	//@Autowired
-    //private GraphQlTester graphQlTester;
-	
-	/**
-	@Test
-	@WithMockUser	
-	public void employeeById_returnsEmployeeInfo() throws Exception {
-		
-		when( this.employeeService.getEmployee( Mockito.anyLong() ) ).thenReturn( new EmployeeInfo() );
-		
-		this.graphQlTester
-				.documentName("employeeById")
-				.variable("id", "1")
-		        .execute()
-		        .path("employeeById")
-		        .matchesJson("""
-		            {
-		                "id": "book-1",
-		                "name": "Effective Java",
-		                "pageCount": 416,
-		                
-		                "author": {
-		                  "firstName": "Joshua",
-		                  "lastName": "Bloch"
-		                }
-		            }
-		        """);
-	}
-	*/
-	
 	@Test
 	@WithMockUser(username = "user", roles = {"USER"})
 	public void upsert_hasUserRoleStatusForbidden() throws Exception {
@@ -88,7 +54,7 @@ class EmployeeControllerTest {
 		
 		RequestBuilder request = MockMvcRequestBuilders.post("/employees/post").params(params);
 
-		MvcResult result  = mockMvc.perform(request)
+		mockMvc.perform(request)
 								.andExpect(MockMvcResultMatchers.status().isOk())
 								.andExpect(MockMvcResultMatchers.view().name("employee_form"))								
 								.andExpect(MockMvcResultMatchers.model().hasErrors())

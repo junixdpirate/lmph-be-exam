@@ -27,6 +27,11 @@ public class IndexController {
 	    return authentication.isAuthenticated();
 	}
 	
+	/**
+	 * Login page
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping("/login")
 	public String login() throws Exception {
 				
@@ -37,16 +42,29 @@ public class IndexController {
 		return "login";
 	}
 	
+	/**
+	 * Home page
+	 * @return
+	 */
 	@GetMapping("/home")
 	public String home() {
 		return "home";
 	}
 	
+	/**
+	 * Employees list page
+	 * @return
+	 */
 	@GetMapping("/employees")
 	public String index() {
 		return "employees";
 	}
 	
+	/**
+	 * Add employee form
+	 * @param form
+	 * @return
+	 */
 	@SuppressWarnings("unused")
 	@GetMapping("/employees/add")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -54,6 +72,12 @@ public class IndexController {
 		return "employee_form";
 	}
 	
+	/**
+	 * Employee View/Edit form
+	 * @param id
+	 * @param form
+	 * @return
+	 */
 	@GetMapping("/employees/{id}")
 	public String form(@PathVariable Long id, @ModelAttribute("form") EmployeeForm form) {
 		form.setId(id);		

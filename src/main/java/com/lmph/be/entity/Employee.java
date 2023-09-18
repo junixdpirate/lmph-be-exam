@@ -24,34 +24,73 @@ import lombok.Data;
 @Table(name = "employees")
 public class Employee {
 
+	/**
+	 * Primary key
+	 */
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 		
+	/**
+	 * First Name
+	 */
 	private String firstName;
 	
+	/**
+	 * Last Name
+	 */
 	private String lastName;
 	
+	/**
+	 * Middle name
+	 */
 	private String middleName;
 		
+	/**
+	 * Birthdate
+	 */
 	private LocalDate birthdate;
 	
+	/**
+	 * Gender
+	 */
 	private String gender;
 	
+	/**
+	 * Martital Status
+	 */
 	private String maritalStatus;
 	
+	/**
+	 * Position
+	 */
 	private String companyPosition;
 	
+	/**
+	 * Date Hired
+	 */
 	private LocalDate dateHired;
 	
+	/**
+	 * Employee's contacts
+	 */
 	@OneToMany(mappedBy="employee", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Contact> contacts = new ArrayList<>();
 	
+	/**
+	 * Employee's addresses
+	 */
 	@OneToMany(mappedBy="employee", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Address> addresses = new ArrayList<>();
 	
+	/**
+	 * Date created
+	 */
 	private LocalDateTime createdAt;
 	
+	/**
+	 * Date updated
+	 */
 	private LocalDateTime updatedAt;
 	
 }

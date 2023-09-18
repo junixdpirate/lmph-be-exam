@@ -19,16 +19,31 @@ import lombok.Data;
 @Table(name = "addresses")
 public class Address {
 
+	/**
+	 * primary key
+	 */
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 			
+	/**
+	 * Address 1
+	 */
 	private String address1;
 	
+	/**
+	 * Address 2
+	 */
 	private String address2;
 	
+	/**
+	 * Is primary address
+	 */
 	private Boolean isPrimary;
 	
+	/**
+	 * Employee
+	 */
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="employee_id")
 	private Employee employee;

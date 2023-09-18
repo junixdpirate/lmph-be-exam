@@ -29,6 +29,11 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeDao employeeDao;
 	
+	/**
+	 * Fetch employee
+	 * @param id
+	 * @return EmployeeInfo
+	 */
 	public EmployeeInfo getEmployee(Long id) {		
 		try {
 			Employee employee = this.employeeDao.findById(id).get();			
@@ -43,6 +48,10 @@ public class EmployeeService {
 		}
 	}
 		
+	/**
+	 * Fetch all employees
+	 * @return
+	 */
 	public List<EmployeeInfo> getEmployees() {		
 		List<Employee> employeeList = this.employeeDao.findAll();
 					
@@ -55,6 +64,11 @@ public class EmployeeService {
 		
 	}
 	
+	/**
+	 * Upsert
+	 * @param form
+	 * @return
+	 */
 	public EmployeeInfo upsert(EmployeeForm form) {
 		
 		EmployeeInfo employeeInfo = new EmployeeInfo();
@@ -90,6 +104,10 @@ public class EmployeeService {
 		return employeeInfo;
 	}
 		
+	/**
+	 * Delete
+	 * @param id
+	 */
 	public void delete(Long id) {
 		this.employeeDao.deleteById(id);
 	}

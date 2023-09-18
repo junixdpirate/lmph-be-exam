@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+/**
+ * Contact Input
+ * @author Jhun Tiballa
+ */
 @Data
 public class ContactInput implements Serializable {
 	

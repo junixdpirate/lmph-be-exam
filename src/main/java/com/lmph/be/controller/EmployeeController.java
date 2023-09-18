@@ -31,16 +31,32 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
+	/**
+	 * GraphQL controller for fetching single employee
+	 * @param id
+	 * @return
+	 */
 	@QueryMapping
 	public EmployeeInfo employeeById(@Argument Long id) {
 		return this.employeeService.getEmployee( id );			
 	}
 		
+	/**
+	 * GraphQL for fetching all employees
+	 * @return
+	 */
 	@QueryMapping
 	public List<EmployeeInfo> employees() {
 		return this.employeeService.getEmployees();
 	}
 	
+	/**
+	 * Employee upsert
+	 * @param form
+	 * @param bindingResult
+	 * @param redirectAttributes
+	 * @return
+	 */
 	@PostMapping("/employees/post")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String upsert(@Valid @ModelAttribute("form") EmployeeForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -56,6 +72,10 @@ public class EmployeeController {
 		return "redirect:/employees";
 	}
 	
+	/**
+	 * Employee delete
+	 * @param id
+	 */
 	@DeleteMapping("/employees/{id}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ResponseBody
