@@ -25,7 +25,7 @@ You must have the following applications installed in your machine to run this p
 - Docker or Docker Desktop for Windows
 - Git
 
-## Deploying the dockerize application
+## Deploying the dockerized application
 
 There is already a ready docker-compose file for running a dockerize application, You don't need to do build. The image application is available in this docker hub repo:
 ```
@@ -62,7 +62,7 @@ The application has enabled a migration that will automatically create an empty 
 $ git clone https://github.com/junixdpirate/lmph-be-exam.git .
 ```
 
-2. First, you have to stop the dockerize app if you run or deployed it. See Deploying the dockerize application for stopping the app. 
+2. Mysql and Sonarqube will are dockerized. First, you have to stop the dockerized app if you run or deployed it, Mysql and the app are using the same port (3306 and 8080), It will cause port conflict if both app are running. See Deploying the dockerize application for stopping the app. 
 Run the docker-compose:
 
 ```
