@@ -62,7 +62,7 @@ The application has enabled a migration that will automatically create an empty 
 $ git clone https://github.com/junixdpirate/lmph-be-exam.git .
 ```
 
-2. Mysql and Sonarqube will are dockerized. First, you have to stop the dockerized app if you run or deployed it, Mysql and the app are using the same port (3306 and 8080), It will cause port conflict if both app are running. See Deploying the dockerize application for stopping the app. 
+2. Mysql and Sonarqube are dockerized. First, you have to stop the dockerized app if you run or deployed it, Mysql and the app are using the same port (3306 and 8080), It will cause port conflict if both app are running. See Deploying the dockerize application for stopping the app. 
 Run the docker-compose:
 
 ```
