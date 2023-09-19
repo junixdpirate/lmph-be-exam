@@ -1,8 +1,10 @@
 package com.lmph.be.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -17,6 +19,7 @@ import com.lmph.be.entity.Employee;
 import com.lmph.be.form.AddressInput;
 import com.lmph.be.form.ContactInput;
 import com.lmph.be.form.EmployeeForm;
+
 
 /**
  * User Service class
@@ -35,17 +38,18 @@ public class EmployeeService {
 	 * @return EmployeeInfo
 	 */
 	public EmployeeInfo getEmployee(Long id) {		
-		try {
-			Employee employee = this.employeeDao.findById(id).get();			
+			 		
+		Optional<Employee> optEmployee = this.employeeDao.findById(id);
+					
+		if(optEmployee.isPresent()) {
 			EmployeeInfo employeeInfo = new EmployeeInfo();
-			
+			Employee employee = this.employeeDao.findById(id).get();
 			BeanUtils.copyProperties(employee, employeeInfo);
-			
-			return employeeInfo;			
+			return employeeInfo;	
 		}
-		catch(NoSuchElementException e) {
+		else {
 			return null;
-		}
+		}				
 	}
 		
 	/**
@@ -97,7 +101,7 @@ public class EmployeeService {
 			}
 		}
 		
-		employee = this.employeeDao.save(employee);
+		employee = this.employeeDao.saveAndFlush(employee);
 		
 		BeanUtils.copyProperties(employee, employeeInfo);
 		
@@ -108,7 +112,7 @@ public class EmployeeService {
 	 * Delete
 	 * @param id
 	 */
-	public void delete(Long id) {
+	public void delete(Long id)  {
 		this.employeeDao.deleteById(id);
 	}
 }

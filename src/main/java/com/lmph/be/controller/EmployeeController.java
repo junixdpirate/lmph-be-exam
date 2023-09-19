@@ -4,21 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import com.lmph.be.dto.EmployeeInfo;
 import com.lmph.be.form.EmployeeForm;
 import com.lmph.be.service.EmployeeService;
 
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 
 /**
@@ -50,36 +46,18 @@ public class EmployeeController {
 		return this.employeeService.getEmployees();
 	}
 	
-	/**
-	 * Employee upsert
-	 * @param form
-	 * @param bindingResult
-	 * @param redirectAttributes
-	 * @return
-	 */
-	@PostMapping("/employees/post")
+	@MutationMapping
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String upsert(@Valid @ModelAttribute("form") EmployeeForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-						
-		if (bindingResult.hasErrors()) {	
-			return "employee_form";			
-		}
-		else {						
-			this.employeeService.upsert(form);			
-			redirectAttributes.addFlashAttribute("info", List.of("employee.upsert.success"));
-		}
-			
-		return "redirect:/employees";
+	public EmployeeInfo upsertEmployee(@Valid @Argument EmployeeForm form) throws ConstraintViolationException {
+		return this.employeeService.upsert(form);	
 	}
 	
-	/**
-	 * Employee delete
-	 * @param id
-	 */
-	@DeleteMapping("/employees/{id}")
+	@MutationMapping
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@ResponseBody
-	public void delete(@PathVariable Long id) {
-		this.employeeService.delete(id);		
+	public Boolean deleteEmployee(@Argument Long id) {
+		
+		this.employeeService.delete(id);
+		
+		return true;
 	}
 }

@@ -319,6 +319,14 @@ class EmployeeServiceTest {
 		
 		EmployeeForm employeeForm = new EmployeeForm();
 		employeeForm.setId( employeeInfo.getId() );
+		employeeForm.setFirstName("Juan Edited");
+		employeeForm.setLastName("Dela Cruz Edited");
+		employeeForm.setMiddleName("M Edited");
+		employeeForm.setBirthdate( LocalDate.parse("1990-01-01") );
+		employeeForm.setCompanyPosition("Employee Edited");
+		employeeForm.setDateHired( LocalDate.parse("2010-01-01") );
+		employeeForm.setMaritalStatus( MaritalStatus.U.toString() );
+		employeeForm.setGender( Gender.U.toString() );
 		
 		Address address = employeeInfo.getAddresses().get(0);
 		
@@ -362,6 +370,14 @@ class EmployeeServiceTest {
 		
 		EmployeeForm employeeForm = new EmployeeForm();
 		employeeForm.setId( employeeInfo.getId() );
+		employeeForm.setFirstName("Juan Edited");
+		employeeForm.setLastName("Dela Cruz Edited");
+		employeeForm.setMiddleName("M Edited");
+		employeeForm.setBirthdate( LocalDate.parse("1990-01-01") );
+		employeeForm.setCompanyPosition("Employee Edited");
+		employeeForm.setDateHired( LocalDate.parse("2010-01-01") );
+		employeeForm.setMaritalStatus( MaritalStatus.U.toString() );
+		employeeForm.setGender( Gender.U.toString() );
 		
 		Contact contact = employeeInfo.getContacts().get(0);
 		
@@ -400,6 +416,14 @@ class EmployeeServiceTest {
 		
 		EmployeeForm employeeForm = new EmployeeForm();
 		employeeForm.setId( employeeInfo.getId() );
+		employeeForm.setFirstName("Juan Edited");
+		employeeForm.setLastName("Dela Cruz Edited");
+		employeeForm.setMiddleName("M Edited");
+		employeeForm.setBirthdate( LocalDate.parse("1990-01-01") );
+		employeeForm.setCompanyPosition("Employee Edited");
+		employeeForm.setDateHired( LocalDate.parse("2010-01-01") );
+		employeeForm.setMaritalStatus( MaritalStatus.U.toString() );
+		employeeForm.setGender( Gender.U.toString() );
 		
 		employeeForm.setAddresses( null );
 		employeeForm.setContacts( null );

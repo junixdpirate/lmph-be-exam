@@ -209,14 +209,14 @@
 										
 										<div id="contactList">
 											<div class="row contact-info-block mt-2">
-												<input type="hidden" name="contacts[0].id" >
+												<input type="hidden" class="fieldContactId" name="contacts[0].id" >
 												<div class="col">
-													<input type="text" class="form-control" name="contacts[0].contactNo" placeholder="09170000000">
+													<input type="text" class="form-control fieldContactNo" name="contacts[0].contactNo" placeholder="09170000000">
 												</div>
 												<div class="col-auto pt-2">
 						 
 													 <div class="form-check inline-block mr-3">
-													  	<input class="form-check-input checkIsPrimaryContact" type="checkbox" name="contacts[0].isPrimary" value="1" checked >		  
+													  	<input class="form-check-input checkIsPrimaryContact fieldIsPrimary" type="checkbox" name="contacts[0].isPrimary" value="1" checked >		  
 													  </div>
 													 <button type="button" class="close btnDeleteContact" style="margin-top:-2px">x</button>
 												</div>
@@ -229,18 +229,18 @@
 										
 										<div id="addressList">
 											<div class="row address-info-block mt-2">
-												<input type="hidden" name="addresses[0].id" >
+												<input type="hidden" class="fieldAddressId" name="addresses[0].id" >
 												<div class="col">
-													<input type="text" class="form-control" name="addresses[0].address1" placeholder="Address Line 1">
+													<input type="text" class="form-control fieldAddress1" name="addresses[0].address1" placeholder="Address Line 1">
 												</div>
 												<div class="col">
-													<input type="text" class="form-control" name="addresses[0].address2" placeholder="Address Line 2">
+													<input type="text" class="form-control fieldAddress2" name="addresses[0].address2" placeholder="Address Line 2">
 												</div>
 												
 												<div class="col-auto pt-2">
 						 
 													 <div class="form-check inline-block mr-3">
-													  	<input class="form-check-input checkIsPrimaryAddress" type="checkbox" name="addresses[0].isPrimary" value="1" checked >		  
+													  	<input class="form-check-input checkIsPrimaryAddress fieldIsPrimary" type="checkbox" name="addresses[0].isPrimary" value="1" checked >		  
 													  </div>
 													 <button type="button" class="close btnDeleteAddress" style="margin-top:-2px">x</button>
 												</div>
@@ -325,7 +325,7 @@
     
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
-
+    <script src="/js/appService.js"></script>
 
 	<script>
 		
@@ -340,8 +340,10 @@
 			
 			const loadInit = () => {
 				
-				$('#btnActionSubmit').click( () => {
-					$('#form').submit();
+				$('#btnActionSubmit').click( async () => {
+					const form = document.querySelector('#form');
+					const result = await appService().upsert(form);
+					document.location.href="/employees";
 				});
 				
 				$('#btnActionDelete').click( () => {
@@ -392,24 +394,13 @@
 				populateAddressFieldArrayNames();
 			}
 			
-			const confirmDeleteEmployee = () => {
+			const confirmDeleteEmployee = async () => {
 				
-				deleteEmployee(EMPLOYEE_ID);
+				const result = await appService().delete(EMPLOYEE_ID);
+				document.location.href = "/employees";
 			}
 			
-			const deleteEmployee = (id) => {
 				
-				$.ajax({
-				    url: `/employees/${id}`,
-				    type: 'DELETE',
-				    success: function(result) {
-				        // Do something with the result
-				        
-				        document.location.href = "/employees"
-				    }
-				});
-			}
-			
 			const fetch = id => {
 				$.post({
 					  	url: '/graphql',
@@ -447,7 +438,7 @@
 			
 			const populateForm = employee => {
 				
-				console.log(employee);
+				//console.log(employee);
 				
 				const form = $('#form');
 				const formElement = form.get(0);

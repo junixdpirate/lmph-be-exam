@@ -176,6 +176,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
+     <script src="/js/appService.js"></script>
 
 
 	<script>
@@ -191,17 +192,12 @@
 				$("#dataTable").on('click', '.btnActionDelete', deleteEmployee);
 			}
 			
-			const deleteEmployee = (e) => {
+			const deleteEmployee = async (e) => {
 				e.preventDefault();
 				const id = e.target.dataset.id;
-					
-				$.ajax({
-				    url: `/employees/${id}`,
-				    type: 'DELETE',
-				    success: function(result) {	       	        
-				        document.location.href = "/employees"
-				    }
-				});
+				
+				const result = await appService().delete(id);
+				document.location.reload();								
 			}
 			
 			const fetch = () => {
